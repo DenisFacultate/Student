@@ -25,7 +25,7 @@ public class Main {
                         String nume = date[2].trim();
                         String formatieDeStudiu = date[3].trim();
 
-                        Student student = new Student(numarMatricol, prenume, nume, formatieDeStudiu);
+                        Student student = new Student(numarMatricol, prenume, nume, formatieDeStudiu, 0.0);
 
 
                         mapStudenti.put(numarMatricol, student);
@@ -77,5 +77,17 @@ public class Main {
             } catch (FileNotFoundException e) {
                 System.err.println("Eroare: Nu s-a putut crea/accesa fisierul 'studenti_out_sorted.txt'");
             }
+
+        List<Student> studentiCuNote = Arrays.asList(
+                new Student(1025,"Andrei","Popa","ISM141/2", 8.70),
+                new Student(1024,"Ioan","Mihalcea","ISM141/1", 10),
+                new Student(1026,"Anamaria","Prodan","TI131/1", 8.90),
+                new Student(1029,"Bianca","Popescu","TI131/1,", 10),
+                new Student(1029,"Maria","Pana","TI131/2,", 4.10),
+                new Student(1029,"Gabriela","Mohanu","TI131/2,", 7.33),
+                new Student(1029,"Marius","Nasta","TI131/2,", 3.20),
+                new Student(1029,"Marius","Nasta","TI131/1,", 5.12),
+                new Student(1029,"Andrei","Dobrescu","TI131/2,", 2.22)
+        );
     }
 }

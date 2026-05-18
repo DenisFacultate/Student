@@ -1,23 +1,31 @@
 package ro.ulbs.proiectaresoftware.students;
 import java.util.Objects;
 
-public class Student {
-    int numarMatricol;
-    String Prenume;
-    String Nume;
-    String formatieDeStudiu;
-    double nota;
+public  class Student {
+    private final int numarMatricol;
+    private final String prenume;
+    private final String nume;
+    private final String formatieDeStudiu;
+    private double nota;
+
+    public Student(int numarMatricol, String prenume, String nume, String formatieDeStudiu,double nota) {
+        this.numarMatricol = numarMatricol;
+        this.prenume = prenume;
+        this.nume = nume;
+        this.formatieDeStudiu = formatieDeStudiu;
+        this.nota = nota;
+    }
 
     public int getNumarMatricol() {
         return numarMatricol;
     }
 
     public String getPrenume() {
-        return Prenume;
+        return prenume;
     }
 
     public String getNume() {
-        return Nume;
+        return nume;
     }
 
     public String getFormatieDeStudiu() {
@@ -35,22 +43,15 @@ public class Student {
 
     @Override
     public int hashCode() {
-        return Objects.hash(numarMatricol, Prenume, Nume, formatieDeStudiu, nota);
+        return Objects.hash(numarMatricol, prenume, nume, formatieDeStudiu, nota);
     }
 
     public void setNota(double nota) { this.nota = nota; };
 
     @Override
     public String toString() {
-        return String.format("%10d %14s %11s %15s %5.2f", numarMatricol, Prenume, Nume, formatieDeStudiu, nota);
+        return String.format("%10d %14s %11s %15s %5.2f", numarMatricol, prenume, nume, formatieDeStudiu, nota);
     }
 
-    public Student(int numarMatricol, String prenume, String nume, String formatieDeStudiu) {
-        this.numarMatricol = numarMatricol;
-        Prenume = prenume;
-        Nume = nume;
-        this.formatieDeStudiu = formatieDeStudiu;
-        this.nota = 0;
-    }
 }
 
