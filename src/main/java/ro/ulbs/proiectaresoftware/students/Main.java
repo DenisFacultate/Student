@@ -81,8 +81,38 @@ public class Main {
                 new Student(1029,"Gabriela","Mohanu","TI131/2,", 7.33),
                 new Student(1029,"Marius","Nasta","TI131/2,", 3.20),
                 new Student(1029,"Marius","Nasta","TI131/1,", 5.12),
-                new Student(1029,"Andrei","Dobrescu","TI131/2,", 2.22)
-        );
+                new Student(1029,"Andrei","Dobrescu","TI131/2,", 2.22));
+
+                System.out.println("\n--- a) Studenti cu nota 10 ---");
+        studentiCuNote.stream()
+                .filter(s -> s.getNota() == 10.0)
+                .forEach(System.out::println);
+
+        System.out.println("\n--- b) Studenti cu nota sub 5 ---");
+        studentiCuNote.stream()
+                .filter(s -> s.getNota() < 5.0)
+                .forEach(System.out::println);
+
+        System.out.println("\n--- c) Transformare studenti cu nota < 4 in nota 4 ---");
+        List<Student> studentiMapati = studentiCuNote.stream()
+                .map(s -> s.getNota() < 4.0 ?
+                        new Student(s.getNumarMatricol(), s.getPrenume(), s.getNume(), s.getFormatieDeStudiu(), 4.0)
+                        : s)
+                .toList();
+        studentiMapati.forEach(System.out::println);
+
+        System.out.println("\n--- d) Suma notelor (reduce) ---");
+        double sumaNotelor = studentiCuNote.stream()
+                .map(Student::getNota)
+                .reduce(0.0, Double::sum);
+        System.out.println("Suma totala a notelor: " + sumaNotelor);
+
+        System.out.println("\n--- e) Media notelor ---");
+        if (!studentiCuNote.isEmpty()) {
+            double media = sumaNotelor / studentiCuNote.size();
+            System.out.println("Media notelor este: " + media);
+        }
+
 
         System.out.println("\n--- Tema 4.5.3 ---");
         double notaBianca = gasesteNota("Bianca", "Popescu", mapStudenti);
