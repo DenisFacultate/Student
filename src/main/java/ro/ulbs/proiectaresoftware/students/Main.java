@@ -110,4 +110,60 @@ public class Main {
         return 0.0;
     }
 
+    public static void writeToXls(java.util.List<Student> studenti, String xlsFileName) {
+        try (org.apache.poi.ss.usermodel.Workbook workbook = new org.apache.poi.xssf.usermodel.XSSFWorkbook()) {
+            org.apache.poi.ss.usermodel.Sheet sheet = workbook.createSheet("Studenti");
+
+            int rowNum = 0;
+            org.apache.poi.ss.usermodel.Row header = sheet.createRow(rowNum++);
+            header.createCell(0).setCellValue("Matricol");
+            header.createCell(1).setCellValue("Prenume");
+            header.createCell(2).setCellValue("Nume");
+            header.createCell(3).setCellValue("Formatie");
+            header.createCell(4).setCellValue("Nota");
+
+            for (Student st : studenti) {
+                org.apache.poi.ss.usermodel.Row row = sheet.createRow(rowNum++);
+                row.createCell(0).setCellValue(st.getNumarMatricol());
+                row.createCell(1).setCellValue(st.getPrenume());
+                row.createCell(2).setCellValue(st.getNume());
+                row.createCell(3).setCellValue(st.getFormatieDeStudiu());
+                row.createCell(4).setCellValue(st.getNota());
+            }
+
+            try (java.io.FileOutputStream fos = new java.io.FileOutputStream(xlsFileName)) {
+                workbook.write(fos);
+            }
+            System.out.println("Export reusit in fisierul: " + xlsFileName);
+
+        } catch (Exception e) {
+            System.err.println("Eroare la scrierea in Excel: " + e.getMessage());
+        }
+    }
+
+    public static java.util.List<Student> readFromXls(String xlsFileName) {
+        java.util.List<Student> listaStudenti = new java.util.ArrayList<>();
+
+        try (java.io.FileInputStream fis = new java.io.FileInputStream(new java.io.File(xlsFileName));
+             org.apache.poi.ss.usermodel.Workbook workbook = new org.apache.poi.xssf.usermodel.XSSFWorkbook(fis)) {
+
+            org.apache.poi.ss.usermodel.Sheet sheet = workbook.getSheetAt(0);
+
+            for (org.apache.poi.ss.usermodel.Row row : sheet) {
+                if (row.getRowNum() == 0) continue;
+                int matricol = (int) row.getCell(0).getNumericCellValue();
+                String prenume = row.getCell(1).getStringCellValue();
+                String nume = row.getCell(2).getStringCellValue();
+                String formatie = row.getCell(3).getStringCellValue();
+                double nota = row.getCell(4).getNumericCellValue();
+
+                listaStudenti.add(new Student(matricol, prenume, nume, formatie, nota));
+            }
+        } catch (Exception e) {
+            System.err.println("Eroare la citirea din Excel: " + e.getMessage());
+        }
+
+        return listaStudenti;
+    }
+
 }
